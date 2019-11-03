@@ -28,7 +28,16 @@ export default {
       this.todos = this.todos.filter(todo => todo.id !== id);
     },
     addTodo(newTodo) {
-      this.todos = [...this.todos, newTodo];
+      const options = {
+        method: "POST",
+        body: JSON.stringify(newTodo),
+        headers: {
+          "Content-Type": "application/json"
+        }
+      };
+      fetch("https://jsonplaceholder.typicode.com/todos", options)
+        .then(response => response.json())
+        .then(data => (this.todos = [...this.todos, data]));
     }
   },
   created() {
