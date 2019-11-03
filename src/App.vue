@@ -25,7 +25,16 @@ export default {
   },
   methods: {
     deleteTodo(id) {
-      this.todos = this.todos.filter(todo => todo.id !== id);
+      const options = {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json"
+        }
+      };
+      fetch(`https://jsonplaceholder.typicode.com/todos/${id}`, options)
+        .then(response => response.json())
+        .then(() => (this.todos = this.todos.filter(todo => todo.id !== id)))
+        .catch(error => console.log(error));
     },
     addTodo(newTodo) {
       const options = {
